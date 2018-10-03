@@ -1,0 +1,17 @@
+.Board{
+  height: 100%;
+  width: 100%;
+}
+
+.board-row {
+  margin-bottom: 20px;
+  height: 30%;
+}
+
+.board-row div {
+  display: none;
+}
+
+.status{
+  margin-bottom: 2%;
+}
