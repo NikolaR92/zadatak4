@@ -1,10 +1,10 @@
-#[Memory Game]
+# Memory Game
 
 Game was made as a test for a Intership. It is basic Memory Game.
 More information about this types of games can be found at
 [Concentration games](https://en.wikipedia.org/wiki/Concentration_(game))
 
-##Dependencies
+## Dependencies
 * [git](https://git-scm.com/) - Distributed version control system
 * [node.js](http://nodejs.org) - JavaScript runtime
 * [yarn](https://yarnpkg.com) - Packages dependecy manager
