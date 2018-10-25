@@ -2,6 +2,7 @@ export const REMOVE_PAIR = 'REMOVE_PAIR';
 export const VISITED = 'VISITED';
 export const UNVISIT = 'UNVISIT';
 export const RESTART = 'RESTART';
+export const VICTORY = 'VICTORY';
 
 export function removeSquares(i, j) {
 	return { type: REMOVE_PAIR, indexes: [i, j] };
@@ -17,4 +18,8 @@ export function unvisit(i) {
 
 export function restart() {
 	return { type: RESTART };
+}
+
+export function victory() {
+	return { type: VICTORY };
 }

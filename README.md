@@ -60,3 +60,8 @@ $ yarn start
 ```sh
 $ yarn build
 ```
+
+## Create documentation
+```sh
+$ yarn generate:docs
+```

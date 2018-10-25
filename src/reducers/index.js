@@ -1,27 +1,41 @@
 import { List } from 'immutable';
+
 import {
 	REMOVE_PAIR,
 	VISITED,
 	UNVISIT,
 	RESTART,
+	VICTORY,
 } from '../actions';
 import shuffelArray from '../js/randomArray';
+import createCards from '../js/createCards';
+import config from '../js/config';
+
+const cards = createCards(config.numberOfRows * config.numberOfColoms);
+let error = '';
+if (cards.length === 0) error = 'Invalide number of cards, the number of card should be even numbers';
 
 
 const initialState = {
-	squares: List(shuffelArray([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8])),
+	squares: List(shuffelArray(cards)),
 	visitedSquare: List([-1, -1]),
-	foundCards: List(),
+	victory: false,
+	error,
 };
 
 const rootReducer = (state = initialState, action) => {
 	switch (action.type) {
-	case REMOVE_PAIR:
+	case REMOVE_PAIR: {
+		const pair1 = state.squares.get(action.indexes[0]);
+		const pair2 = state.squares.get(action.indexes[1]);
+		pair1.show = true;
+		pair2.show = true;
 		return {
-			foundCards: state.foundCards.push(state.squares.get(action.indexes[0])),
-			squares: (state.squares.set(action.indexes[0], -1)).set(action.indexes[1], -1),
+			...state,
+			squares: (state.squares.set(action.indexes[0], pair1)).set(action.indexes[1], pair2),
 			visitedSquare: List([-1, -1]),
 		};
+	}
 	case VISITED:
 		return {
 			...state,
@@ -29,8 +43,21 @@ const rootReducer = (state = initialState, action) => {
 		};
 	case UNVISIT:
 		return { ...state, visitedSquare: List([-1, -1]) };
-	case RESTART:
-		return initialState;
+	case RESTART: {
+		const array = state.squares.toJS();
+		array.forEach((x) => { x.show = false; });
+		return {
+			squares: List(array),
+			visitedSquare: List([-1, -1]),
+			victory: false,
+			error: '',
+		};
+	}
+	case VICTORY:
+		return {
+			...state,
+			victory: true,
+		};
 	default:
 		return state;
 	}

@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../style/Restart.css';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { restart } from '../actions/index';
 
-const mapDispatchToProps = dispatch => ({
-	restartFunction: () => dispatch(restart()),
-});
+/** Component for rendering resete button */
+class Restart extends Component {
+	constructor(props) {
+		super(props);
+		const { dispatch } = props;
+		this.boundActionCreators = bindActionCreators(restart, dispatch);
+	}
+
+	render() {
+		const { dispatch } = this.props;
+		return (
+			<button
+				type="button"
+				className="restart"
+				onClick={() => { dispatch(restart()); }}
+			>
+				{' Restart Game'}
 
 
-function Restart({ restartFunction }) {
-	return (
-		<button
-			type="button"
-			className="restart"
-			onClick={() => restartFunction()}
-		>
-			{' Restart Game'}
-
-
-		</button>
-	);
+			</button>
+		);
+	}
 }
 
 Restart.propTypes = {
-	restartFunction: PropTypes.func.isRequired,
+	dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Restart);
+export default connect(null)(Restart);
