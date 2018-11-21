@@ -1,6 +1,6 @@
 # Memory Game
 
-Game was made as a test for a Intership. It is basic Memory Game.
+Game was made as a test for a Internship. It is basic Memory Game.
 More information about this types of games can be found at
 [Concentration games](https://en.wikipedia.org/wiki/Concentration_(game))
 
@@ -15,7 +15,7 @@ More information about this types of games can be found at
 $ git clone https://NikolaR92@bitbucket.org/NikolaR92/zadatak4.git
 ```
 
-##Installing dependencies for Ubuntu
+## Installing dependencies for Ubuntu
 
 Npm
 ```sh
@@ -28,14 +28,14 @@ $ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 $ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 $ sudo apt-get update
 $ sudo apt-get install yarn
-
-##Install tools JavaScript
+```
+## Install tools JavaScript
 
 ```sh
 $ yarn install - installs all packages of a project
 $ yarn upgrade - upgrades all packages of a project
 ```
-##Adding new packages with yarn
+## Adding new packages with yarn
 dependencies
 ```sh
 $ yarn add package_name

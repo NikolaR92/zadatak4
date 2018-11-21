@@ -6,31 +6,25 @@ import SquaresRow from './SquaresRow';
 
 
 const mapStateToProps = state => ({
-	victory: state.victory,
-	error: state.error,
+	numberOfCards: state.get('numberOfCards'),
 });
 
-/** FUnctiono for rendering Board with messages or Squares */
-function Board({ victory, error }) {
-	let tmp = '';
-	if (victory) {
+/** Function for rendering Board with messages or Squares */
+function Board({ numberOfCards }) {
+	let tmp = (<SquaresRow />);
+	if (numberOfCards === 0) {
 		tmp = 'Victory!!!!';
-	} else if (error) {
-		tmp = error;
-	} else {
-		tmp = (<SquaresRow />);
 	}
-
 	return (
 		<div className="Board">
+
 			{tmp}
 		</div>
 	);
 }
 
 Board.propTypes = {
-	victory: PropTypes.bool.isRequired,
-	error: PropTypes.string.isRequired,
+	numberOfCards: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Board);

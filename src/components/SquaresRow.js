@@ -1,16 +1,22 @@
 import React from 'react';
 import '../style/Board.css';
-
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Square from './Square';
-import config from '../js/config';
+
+const mapStateToProps = state => ({
+	numberOfRows: state.get('numberOfRows'),
+	numberOfColons: state.get('numberOfColons'),
+});
+
 
 /** Function for creating and rendering Squares */
-function SquaresRow() {
+function SquaresRow({ numberOfColons, numberOfRows }) {
 	const tmp = [];
 	let n = 0;
-	for (let i = 0; i < config.numberOfRows; i += 1) {
+	for (let i = 0; i < numberOfRows; i += 1) {
 		const row = [];
-		for (let j = 0; j < config.numberOfColoms; j += 1) {
+		for (let j = 0; j < numberOfColons; j += 1) {
 			row.push(<Square
 				key={n}
 				index={n}
@@ -28,4 +34,9 @@ function SquaresRow() {
 	return tmp;
 }
 
-export default SquaresRow;
+SquaresRow.propTypes = {
+	numberOfRows: PropTypes.number.isRequired,
+	numberOfColons: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps)(SquaresRow);

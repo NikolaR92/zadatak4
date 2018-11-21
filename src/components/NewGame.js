@@ -3,10 +3,11 @@ import '../style/Restart.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { restart } from '../actions/index';
 
 /** Component for rendering resete button */
-class Restart extends Component {
+class NewGame extends Component {
 	constructor(props) {
 		super(props);
 		const { dispatch } = props;
@@ -16,21 +17,23 @@ class Restart extends Component {
 	render() {
 		const { dispatch } = this.props;
 		return (
-			<button
-				type="button"
-				className="restart"
-				onClick={() => { dispatch(restart()); }}
-			>
-				{' Restart Game'}
+			<Link to="/game" href="/game">
+				<button
+					type="button"
+					className="restart"
+					onClick={() => { dispatch(restart()); }}
+				>
+					{' New Game '}
 
 
-			</button>
+				</button>
+			</Link>
 		);
 	}
 }
 
-Restart.propTypes = {
+NewGame.propTypes = {
 	dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(null)(Restart);
+export default connect(null)(NewGame);

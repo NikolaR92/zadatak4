@@ -5,10 +5,10 @@
 
 
 /**  Function shuffels a array of numbers from 1 to n using Fisher–Yates shuffle algorithm
- * @param {Array.<Card>} array - Array of Cards
- * @returns {Array.<Card>} Array of randomly shuffled Cards
+ * @param {Array.<number>} array - Array of Cards
+ * @returns {Array.<number>} Array of randomly shuffled Cards
  */
-function shuffelArray(array) {
+function shuffleArray(array) {
 	const randomArray = array.slice();
 
 	/** Fisher-Yates algorithm */
@@ -21,4 +21,4 @@ function shuffelArray(array) {
 	return randomArray;
 }
 
-export default shuffelArray;
+export default shuffleArray;

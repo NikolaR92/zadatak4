@@ -9,87 +9,49 @@ import * as Actions from '../actions/index';
 
 
 const mapStateToProps = state => ({
-	squares: state.squares,
-	visitedSquare: state.visitedSquare,
+	squares: state.get('squares'),
+	visitedSquares: state.get('visitedSquares'),
+	firstClicked: state.get('firstClicked'),
+	secondClicked: state.get('secondClicked'),
 });
 
 /** Component for rendering Square */
 class Square extends Component {
 	constructor(props) {
 		super(props);
-
 		const { dispatch } = props;
 		this.boundActionCreators = bindActionCreators(Actions, dispatch);
 		this.handleClick = this.handleClick.bind(this);
 	}
 
 	/** Method for  handling event of clicked square
-	 * @param {Integer} i - Index of a clicked square
+	 *
 	 */
-	handleClick(i) {
+	handleClick() {
 		const {
-			visitedSquare, squares, dispatch,
+			dispatch, squares, firstClicked, secondClicked, visitedSquares, index,
 		} = this.props;
-
-		const [firstSquare, secondSquare] = visitedSquare.toJS();
-		let squaresJS = squares.toJS();
-		if (!(squaresJS[i].show)) {
-		/** We check if two cards are clicked and if they are the same we remove them from the board
-		 * we use array with two elements ,that are indexes of the cards, for making a note
-		 * which card is selected
-		 */
-			if (firstSquare === -1) {
-				const visitedAction = Actions.visiteSquare(i);
-				dispatch(visitedAction);
-			} else if (secondSquare === -1) {
-				const visitedAction = Actions.visiteSquare(i);
-				dispatch(visitedAction);
-
-
-				const secondClickedCard = squaresJS[i];
-				const firstClickedCard = squaresJS[firstSquare];
-				if (firstClickedCard.number === secondClickedCard.number && firstSquare !== -1
-				&& i !== firstSquare) {
-					const removeAction = Actions.removeSquares(i, firstSquare);
-					dispatch(removeAction);
-
-					squaresJS = squares.toJS();
-					let victor = squaresJS.map(x => x.show === true);
-					victor = victor.reduce((x, y) => y === true && y === x);
-					if (victor) {
-						const victoryAction = Actions.victory();
-						dispatch(victoryAction);
-					}
-				}
-			} else {
-				const unvisitAction = Actions.unvisit(firstSquare);
-				dispatch(unvisitAction);
-				const visitedAction = Actions.visiteSquare(i);
-				dispatch(visitedAction);
-			}
+		const ActionClicked = Actions.clicked(firstClicked, secondClicked, index, squares.toJS());
+		if (visitedSquares.get(index) === -1) {
+			dispatch(ActionClicked);
 		}
 	}
 
 
 	render() {
-		const { squares, visitedSquare, index } = this.props;
-		const squaresJS = squares.toJS();
-		const [firstClickedCard, secondClickedCard] = visitedSquare.toJS();
-		let valueTmp = '';
-		/** if index of a card is in visitedSquare list those cards must be filped
+		const { squares, visitedSquares, index } = this.props;
+		let valueTmp = <img src={img} alt="" />;
+		/** if index of a card is in visitedSquare list those cards must be flipped
 		 * and show value of that square
 		 */
-		if (firstClickedCard === index
-        || secondClickedCard === index || squaresJS[index].show) {
-			valueTmp = squaresJS[index].number;
-		} else {
-			valueTmp = <img src={img} alt="" />;
+		if (visitedSquares.get(index) === 1) {
+			valueTmp = squares.get(index);
 		}
 		return (
 			<button
 				type="button"
 				className="square"
-				onClick={() => this.handleClick(index)}
+				onClick={() => this.handleClick()}
 			>
 				{valueTmp}
 			</button>
@@ -98,9 +60,11 @@ class Square extends Component {
 }
 
 Square.propTypes = {
-	visitedSquare: PropTypes.instanceOf(List).isRequired,
+	visitedSquares: PropTypes.instanceOf(List).isRequired,
 	squares: PropTypes.instanceOf(List).isRequired,
 	index: PropTypes.number.isRequired,
+	firstClicked: PropTypes.number.isRequired,
+	secondClicked: PropTypes.number.isRequired,
 	dispatch: PropTypes.func.isRequired,
 };
 

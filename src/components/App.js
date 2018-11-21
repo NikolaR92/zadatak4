@@ -1,22 +1,32 @@
 import React from 'react';
+import { Router, Route } from 'react-router-dom';
 import '../style/App.css';
 import Board from './Board';
-import Restart from './Restart';
+import NewGame from './NewGame';
+import Options from './Options';
+import history from '../js/history';
+import Option from './Option';
 
 function App() {
 	return (
-		<div className="App">
-			<header className="App-header">
-				<h1 className="App-title">Memory Game</h1>
-				<div>
-					<Restart />
-				</div>
-			</header>
+		<Router history={history}>
+			<div className="App">
+				<header className="App-header">
+					<h1 className="App-title">Memory Game</h1>
+					<div>
+						<NewGame />
+						<Option />
+					</div>
+				</header>
 
-			<div className="Game">
-				<Board />
+
+				<div className="Game">
+					<Route path="/game" component={Board} />
+					<Route path="/options" component={Options} />
+				</div>
+
 			</div>
-		</div>
+		</Router>
 	);
 }
 
